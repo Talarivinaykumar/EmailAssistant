@@ -1,0 +1,84 @@
+spring:
+  profiles:
+    active: prod
+  
+  data:
+    mongodb:
+      uri: ${MONGODB_URI}
+      database: email_assistant
+  
+  mail:
+    host: ${EMAIL_HOST}
+    port: ${EMAIL_PORT}
+    username: ${EMAIL_USERNAME}
+    password: ${EMAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          ssl:
+            trust: ${EMAIL_HOST}
+
+server:
+  port: ${SERVER_PORT:8080}
+  servlet:
+    context-path: /api
+
+openai:
+  api-key: ${OPENAI_API_KEY}
+  model: ${OPENAI_MODEL:gpt-3.5-turbo}
+  max-tokens: ${OPENAI_MAX_TOKENS:1000}
+  temperature: ${OPENAI_TEMPERATURE:0.7}
+
+email:
+  processing:
+    enabled: true
+    batch-size: 10
+    retry-attempts: 3
+  
+  intent:
+    categories:
+      - REFUND_REQUEST
+      - BUG_REPORT
+      - FEATURE_INQUIRY
+      - GENERAL_SUPPORT
+      - BILLING_ISSUE
+      - TECHNICAL_SUPPORT
+      - COMPLAINT
+      - FEEDBACK
+      - UNKNOWN
+  
+  team-assignment:
+    rules:
+      REFUND_REQUEST: "Billing Team"
+      BUG_REPORT: "Technical Support"
+      FEATURE_INQUIRY: "Product Team"
+      GENERAL_SUPPORT: "Customer Support"
+      BILLING_ISSUE: "Billing Team"
+      TECHNICAL_SUPPORT: "Technical Support"
+      COMPLAINT: "Customer Relations"
+      FEEDBACK: "Product Team"
+      UNKNOWN: "General Support"
+
+logging:
+  level:
+    com.emailassistant: ${LOGGING_LEVEL:INFO}
+    org.springframework: WARN
+    org.mongodb: WARN
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: false
+
+cors:
+  allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:3000}
+  allowed-methods: GET,POST,PUT,DELETE,OPTIONS
+  allowed-headers: "*"
+  allow-credentials: true

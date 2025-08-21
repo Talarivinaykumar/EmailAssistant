@@ -1,0 +1,87 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: Email Assistant
+  
+  data:
+    mongodb:
+      uri: ${MONGODB_URI:mongodb://localhost:27017/email_assistant}
+  
+  mail:
+    host: ${EMAIL_HOST:smtp.gmail.com}
+    port: ${EMAIL_PORT:587}
+    username: ${EMAIL_USERNAME:your_email@gmail.com}
+    password: ${EMAIL_PASSWORD:your_app_password_here}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+# OpenAI Configuration
+openai:
+  api-key: ${OPENAI_API_KEY:your_openai_api_key_here}
+  model: ${OPENAI_MODEL:gpt-4}
+  max-tokens: ${OPENAI_MAX_TOKENS:1000}
+  temperature: ${OPENAI_TEMPERATURE:0.7}
+
+# Email Processing Configuration
+email:
+  batch-size: ${EMAIL_BATCH_SIZE:10}
+  poll-interval: ${EMAIL_POLL_INTERVAL:30000}
+  max-retries: ${EMAIL_MAX_RETRIES:3}
+
+# Team Assignment Configuration
+team:
+  assignment:
+    enabled: ${TEAM_ASSIGNMENT_ENABLED:true}
+    load-balancing:
+      enabled: ${LOAD_BALANCING_ENABLED:true}
+
+# Intent Categories
+intent:
+  categories:
+    - REFUND_REQUEST
+    - BUG_REPORT
+    - FEATURE_REQUEST
+    - GENERAL_INQUIRY
+    - COMPLAINT
+    - TECHNICAL_SUPPORT
+    - BILLING_ISSUE
+    - ACCOUNT_ACCESS
+
+# Team Assignment Rules
+team-assignment:
+  rules:
+    REFUND_REQUEST: ["billing-team", "customer-service"]
+    BUG_REPORT: ["technical-support", "development-team"]
+    FEATURE_REQUEST: ["product-team", "development-team"]
+    GENERAL_INQUIRY: ["customer-service", "general-support"]
+    COMPLAINT: ["customer-service", "escalation-team"]
+    TECHNICAL_SUPPORT: ["technical-support", "development-team"]
+    BILLING_ISSUE: ["billing-team", "customer-service"]
+    ACCOUNT_ACCESS: ["technical-support", "customer-service"]
+
+# Logging Configuration
+logging:
+  level:
+    root: ${LOGGING_LEVEL_ROOT:INFO}
+    com.emailassistant: ${LOGGING_LEVEL_COM_EMAILASSISTANT:DEBUG}
+
+# Swagger Configuration
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+
+# CORS Configuration
+cors:
+  allowed-origins: ["http://localhost:3000", "http://localhost:3001"]
+  allowed-methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+  allowed-headers: ["*"]
+  allow-credentials: true

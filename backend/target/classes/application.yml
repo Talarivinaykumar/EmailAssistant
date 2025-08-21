@@ -1,0 +1,95 @@
+server:
+  port: ${SERVER_PORT:8080}
+
+spring:
+  application:
+    name: email-assistant-backend
+  
+  data:
+    mongodb:
+      uri: ${MONGODB_URI:mongodb://localhost:27017/email_assistant}
+      database: email_assistant
+  
+  mail:
+    host: ${EMAIL_SERVER_HOST:smtp.gmail.com}
+    port: ${EMAIL_SERVER_PORT:587}
+    username: ${EMAIL_USERNAME:}
+    password: ${EMAIL_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+openai:
+  api-key: ${GEMINI_API_KEY:}
+  model: ${OPENAI_MODEL:gemini-1.5-flash}
+  max-tokens: ${OPENAI_MAX_TOKENS:1000}
+  temperature: ${OPENAI_TEMPERATURE:0.7}
+
+
+# Email Processing Configuration
+email:
+  processing:
+    batch-size: 10
+    poll-interval: 30000 # 30 seconds
+    max-retries: 3
+  
+  intent:
+    categories:
+      - REFUND_REQUEST
+      - BUG_REPORT
+      - FEATURE_REQUEST
+      - GENERAL_INQUIRY
+      - BILLING_ISSUE
+      - TECHNICAL_SUPPORT
+      - COMPLAINT
+      - ACCOUNT_ACCESS
+
+# Team Assignment Configuration
+team:
+  assignment:
+    rules:
+      REFUND_REQUEST: billing-team
+      BUG_REPORT: technical-team
+      FEATURE_REQUEST: product-team
+      GENERAL_INQUIRY: support-team
+      BILLING_ISSUE: billing-team
+      TECHNICAL_SUPPORT: technical-team
+      COMPLAINT: support-team
+      ACCOUNT_ACCESS: technical-team
+
+# Logging Configuration
+logging:
+  level:
+    com.emailassistant: DEBUG
+    org.springframework.web: INFO
+    org.springframework.security: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+
+# Swagger Configuration
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+
+# CORS Configuration
+frontend:
+  url: ${FRONTEND_URL:http://localhost:5173}
+cors:
+  allowed-origins:
+    - ${FRONTEND_URL:http://localhost:5173}
+  allowed-methods:
+    - GET
+    - POST
+    - PUT
+    - DELETE
+    - OPTIONS
+  allowed-headers:
+    - "*"
+  allow-credentials: true
+
