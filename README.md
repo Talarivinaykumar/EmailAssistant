@@ -62,8 +62,8 @@ npm start
 ```
 
 ### **3. Access the Application**
-- **Frontend**: http://localhost:3000
-- **Backend API**: http://localhost:8080/api
+- **Frontend**: https://vinayemail.netlify.app/
+- **Backend API**: https://demo-deploy-latest-sf6y.onrender.com
 - **Swagger Docs**: http://localhost:8080/swagger-ui.html
 
 ## 📋 **Complete Project Flow**
